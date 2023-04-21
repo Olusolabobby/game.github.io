@@ -1,5 +1,5 @@
 import "./Questions.css";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import {Button} from "@material-ui/core";
 import {AppRoutes} from "../../Common/routes/AppRoutes";
@@ -14,12 +14,19 @@ const Questions = ({
       setScore,
       score,
       setQuestions,
+                     totalScores,
+                     setTotalScores
    }) => {
 
     const navigate = useNavigate();
 
     const [selected, setSelected] = useState();
+    const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
     const [error, setError] = useState(false);
+
+  useEffect(()=>{
+    currQues > questions.length-1 && navigate (AppRoutes.RESULT);
+  },[currQues])
 
     const handleSelect = (item) => {
         if (selected === item && selected === correct){
@@ -33,14 +40,19 @@ const Questions = ({
 
     const handleCheck = (item) => {
         setSelected(item);
-        if (item === correct) setScore(score + 1);
         setError(false);
     };
 
     const handleNext = () => {
-        if (currQues > 9) {
-            navigate (AppRoutes.RESULT);
-        } else if (selected) {
+        if (currQues > questions.length-2) {
+          setScore(totalScores);
+          navigate (AppRoutes.RESULT);
+        } else if (selected === correct) {
+            setCurrQues((prevState)=>  prevState + 1);
+            // setScore((prevState)=> prevState+1)
+            setTotalScores((prevState)=> prevState+1)
+            setSelected();
+        } else if(selected !== correct) {
             setCurrQues(currQues + 1);
             setSelected();
         } else {
@@ -90,7 +102,7 @@ const Questions = ({
                         style={{ width: 185 }}
                         onClick={handleNext}
                     >
-                        {currQues > 10 ? "Submit" : "Next Question"}
+                        {currQues > 22 ? "Submit" : "Next Question"}
                     </Button>
                 </div>
 

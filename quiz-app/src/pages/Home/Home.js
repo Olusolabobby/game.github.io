@@ -7,31 +7,34 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import {AppRoutes} from "../../Common/routes/AppRoutes";
 
 
-const Home = ({ name, setName, fetchQuestions }) => {
+const Home = ({name, setName, fetchQuestions }) => {
 
     const navigate = useNavigate();
 
+    const[ formName, setFormName] = useState("");
     const[ category, setCategory] = useState("");
     const[ difficulty, setDifficulty] = useState("");
     const[ error, setError] = useState(false);
 
     const handleSubmit = () => {
-        if (category || difficulty || name) {
-            fetchQuestions(category, difficulty);
-            navigate(AppRoutes.QUIZ);
-        } else {
-            setError(true);
-            return;
-        }
 
-        // if (!category || !difficulty || !name) {
-        //     setError(true);
-        //     return;
-        // } else {
-        //     setError(false);
+        // if (category || difficulty || name) {
         //     fetchQuestions(category, difficulty);
         //     navigate(AppRoutes.QUIZ);
+        // } else {
+        //     setError(true);
+        //     return;
         // }
+
+        if (!category || !difficulty || !formName) {
+            setError(true);
+            return;
+        } else {
+            setError(false);
+            setName(formName)
+            fetchQuestions(category, difficulty);
+            navigate(AppRoutes.QUIZ);
+        }
 
     };
 
@@ -46,10 +49,13 @@ const Home = ({ name, setName, fetchQuestions }) => {
                         {error && <ErrorMessage>Please Fill in all the fields</ErrorMessage>}
 
                         <TextField
+                            id="outlined-controlled"
                             style={{ marginBottom: 25 }}
                             label="Enter Your Name"
                             variant="outlined"
-                            // onChange={(e) => setName(e.target.value)}
+                            value={formName}
+                            // ref={name}
+                            onChange={(e) => setFormName(e.target.value)}
                         />
 
                         <TextField select label="Select Category" style={{ marginBottom: 20}} variant="outlined"

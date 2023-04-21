@@ -14,9 +14,10 @@ function App() {
 
     const [name, setName] = useState("");
     const [questions, setQuestions] = useState();
+    const [selectedCategory, setSelectedCategory] = useState();
     const [score, setScore] = useState(0);
 
-
+    console.log('APP RENDERS');
     const fetchQuestions = async( category= "", difficulty= "" ) => {
         // from trivia db api
         const { data } = await axios.get(
@@ -24,9 +25,10 @@ function App() {
                 category && `&category=${category}`
             }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
         );
-        
+
         // console.log (data);
         setQuestions(data.results);
+        setSelectedCategory(category)
     };
 
     const Layout = () => {
@@ -60,6 +62,7 @@ function App() {
                                     setQuestions={setQuestions}
                                     score={score}
                                     setScore={setScore}
+                                    selectedCategory={selectedCategory}
                     />,
                 },
                 {

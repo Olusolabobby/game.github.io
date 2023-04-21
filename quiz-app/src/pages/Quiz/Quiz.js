@@ -2,18 +2,27 @@ import "./Quiz.css";
 import {useEffect, useState} from "react";
 import {CircularProgress} from "@material-ui/core";
 import Questions from "../../components/Questions/Questions";
+import { AppRoutes } from '../../Common/routes/AppRoutes.js';
+import { Link } from 'react-router-dom';
 
-const Quiz = ({ name, questions, setQuestions, score, setScore }) => {
+const Quiz = ({ name, questions, setQuestions, score, setScore, selectedCategory }) => {
 
 
     const [options, setOptions] = useState();
     const [currQues, setCurrQues] = useState(0);
+    const [totalScores, setTotalScores] = useState(0);
+    useEffect(()=>{
+        console.log('currQues', currQues);
+    },[currQues])
+
+    useEffect(()=>{
+        console.log('FIIRST RENDER',selectedCategory);
+    }, [])
 
     useEffect( ()=> {
-        console.log(questions);
-        // console.log(name);
+        console.log('USEEFFECT [currQues, questions]');
 
-        setOptions(
+        questions?.length > 0 &&  setOptions(
             questions &&
                     handleShuffle( [
                             questions[currQues]?.correct_answer,
@@ -23,7 +32,6 @@ const Quiz = ({ name, questions, setQuestions, score, setScore }) => {
 
     }, [currQues, questions]);
 
-    console.log(options);
 
     // https://flaviocopes.com/how-to-shuffle-array-javascript/
     const handleShuffle = (options) => {
@@ -34,10 +42,10 @@ const Quiz = ({ name, questions, setQuestions, score, setScore }) => {
         <div className='quiz'>
             <span className="subtitle"> Welcome, {name}</span>
 
-            {questions ? (
+            {questions?.length > 0 ? (
                 <>
                     <div className="quizInfo">
-                        <span>{questions[currQues].category}</span>
+                        <span>{questions[currQues]?.category}</span>
                         <span>Score : {score}</span>
                     </div>
 
@@ -49,17 +57,22 @@ const Quiz = ({ name, questions, setQuestions, score, setScore }) => {
                         correct={questions[currQues]?.correct_answer}
                         score={score}
                         setScore={setScore}
+                        setTotalScores={setTotalScores}
+                        totalScores={totalScores}
                         setQuestions={setQuestions}
                     />
                 </>
 
             ) : (
+              <>
                 <CircularProgress
                     style={{margin: 100 }}
                     color="inherit"
                     size={150}
                     thickness={1}
                     />
+                  <Link to={AppRoutes.HOME}>Back to Home</Link>
+              </>
             )}
         </div>
     );
