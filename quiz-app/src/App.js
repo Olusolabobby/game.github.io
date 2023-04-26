@@ -17,7 +17,7 @@ function App() {
     const [selectedCategory, setSelectedCategory] = useState();
     const [score, setScore] = useState(0);
 
-    console.log('APP RENDERS');
+    // console.log('APP RENDERS');
     const fetchQuestions = async( category= "", difficulty= "" ) => {
         // from trivia db api
         const { data } = await axios.get(

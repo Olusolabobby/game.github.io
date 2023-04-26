@@ -11,17 +11,16 @@ const Quiz = ({ name, questions, setQuestions, score, setScore, selectedCategory
     const [options, setOptions] = useState();
     const [currQues, setCurrQues] = useState(0);
     const [totalScores, setTotalScores] = useState(0);
-    useEffect(()=>{
-        console.log('currQues', currQues);
-    },[currQues])
+    // useEffect(()=>{
+    //     console.log('currQues', currQues);
+    // },[currQues])
 
-    useEffect(()=>{
-        console.log('FIIRST RENDER',selectedCategory);
-    }, [])
+    // useEffect(()=>{
+    //     console.log('FIIRST RENDER',selectedCategory);
+    // }, [])
 
     useEffect( ()=> {
-        console.log('USEEFFECT [currQues, questions]');
-
+        // console.log('USEEFFECT [currQues, questions]');
         questions?.length > 0 &&  setOptions(
             questions &&
                     handleShuffle( [
@@ -32,11 +31,15 @@ const Quiz = ({ name, questions, setQuestions, score, setScore, selectedCategory
 
     }, [currQues, questions]);
 
+    // console.log(questions);
+
 
     // https://flaviocopes.com/how-to-shuffle-array-javascript/
     const handleShuffle = (options) => {
         return options.sort( ()=> Math.random() - 0.5);
     };
+
+    // console.log(options);
 
     return(
         <div className='quiz'>
@@ -46,7 +49,7 @@ const Quiz = ({ name, questions, setQuestions, score, setScore, selectedCategory
                 <>
                     <div className="quizInfo">
                         <span>{questions[currQues]?.category}</span>
-                        <span>Score : {score}</span>
+                        <span>Score : {totalScores}</span>
                     </div>
 
                     <Questions

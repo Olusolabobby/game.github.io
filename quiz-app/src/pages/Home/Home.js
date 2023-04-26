@@ -18,13 +18,6 @@ const Home = ({name, setName, fetchQuestions }) => {
 
     const handleSubmit = () => {
 
-        // if (category || difficulty || name) {
-        //     fetchQuestions(category, difficulty);
-        //     navigate(AppRoutes.QUIZ);
-        // } else {
-        //     setError(true);
-        //     return;
-        // }
 
         if (!category || !difficulty || !formName) {
             setError(true);
@@ -78,11 +71,11 @@ const Home = ({name, setName, fetchQuestions }) => {
                                 Easy
                             </MenuItem>
                             <MenuItem key="Medium" value="medium">
-                                Average
-                            </MenuItem>
-                            <MenuItem key="Difficult" value="difficult">
                                 Difficult
                             </MenuItem>
+                            {/*<MenuItem key="Difficult" value="difficult">*/}
+                            {/*    Difficult*/}
+                            {/*</MenuItem>*/}
                         </TextField>
 
                         <Button variant="contained" color="primary"

@@ -14,8 +14,8 @@ const Questions = ({
       setScore,
       score,
       setQuestions,
-                     totalScores,
-                     setTotalScores
+      totalScores,
+      setTotalScores
    }) => {
 
     const navigate = useNavigate();
@@ -38,6 +38,7 @@ const Questions = ({
         }
     };
 
+
     const handleCheck = (item) => {
         setSelected(item);
         setError(false);
@@ -59,6 +60,7 @@ const Questions = ({
             setError("Please select an option first");
         }
     }
+
 
     const handleQuit = () => {
         setCurrQues(0);
